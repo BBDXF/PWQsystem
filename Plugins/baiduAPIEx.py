@@ -9,7 +9,7 @@ import re
 user baidu music server to fetch audio info and lrc download address
 
 """
-class MusicsearchAPI_baiduEx():
+class MusicsearchAPI():
     def __init__(self):
         self.sysencode = "utf-8"#sys.getdefaultencoding()
         #self.__setcookie()
@@ -102,7 +102,7 @@ def convert(input):
     else:
         return input
 def test():
-    p = MusicsearchAPI_baiduEx()
+    p = MusicsearchAPI()
     """
     song_id = 190072
     detail_url = 'http://music.163.com/api/song/detail/?id={0}&ids=[{0}]'.format(song_id)

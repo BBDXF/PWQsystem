@@ -8,7 +8,7 @@ import md5
 """\
 user 163 music server to fetch audio info and lrc download address
 """
-class MusicsearchAPI_163():
+class MusicsearchAPI():
     def __init__(self):
         self.sysencode = "utf-8"#sys.getdefaultencoding()
         self.__setcookie()
@@ -119,7 +119,7 @@ def convert(input):
     else:
         return input
 def test():
-    p = MusicsearchAPI_163()
+    p = MusicsearchAPI()
     """
     song_id = 190072
     detail_url = 'http://music.163.com/api/song/detail/?id={0}&ids=[{0}]'.format(song_id)
@@ -129,7 +129,6 @@ def test():
     print convert(rest)
     return None
     """
-    p = MusicsearchAPI_163()
     p.postLrc()
     #p.searchaduioinfo(title="黄昏")
     #for k, v in p.audioinfo.items():

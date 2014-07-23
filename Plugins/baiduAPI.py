@@ -8,7 +8,7 @@ import re
 user baidu music server to fetch audio info and lrc download address
 this one only can fetch audiourl and lrcurl no others
 """
-class MusicsearchAPI_baidu():
+class MusicsearchAPI():
     def __init__(self):
         self.sysencode = "utf-8"#sys.getdefaultencoding()
         self.PluginName = "百度音乐搜索插件"
@@ -95,7 +95,7 @@ def convert(input):
     else:
         return input
 def test():
-    p = MusicsearchAPI_baidu()
+    p = MusicsearchAPI()
     """
     song_id = 190072
     detail_url = 'http://music.163.com/api/song/detail/?id={0}&ids=[{0}]'.format(song_id)

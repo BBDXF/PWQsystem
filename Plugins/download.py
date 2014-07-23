@@ -34,7 +34,7 @@ def downloadfile(downloadinfo):
                 print downloadinfo
 
 
-class DownloadAPI_http():
+class DownloadAPI():
     def __init__(self):
         self.sysencode = "utf-8"#sys.getdefaultencoding()
         self.PluginName = "Http下载插件"
@@ -62,6 +62,6 @@ class DownloadAPI_http():
             self.t = threading.Thread(target=downloadfile, args=(self.downloadinfo,))
             self.t.run()
 def test():
-    p = DownloadAPI_http()
+    p = DownloadAPI()
     p.download(targeturl="http://www.baidu.com/img/baidu_sylogo1.gif", filename="logo.gif")
 if __name__ == "__main__": test()
