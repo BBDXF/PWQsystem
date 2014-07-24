@@ -21,6 +21,8 @@ class PQPlayer(ui_pqplayer.Ui_MainWindow):
         Phonon.createPath(self.mediaobj, self.audiooutput)
         self.slider_progree.setMediaObject(self.mediaobj)
         self.slider_volume.setAudioOutput(self.audiooutput)
+        self.pluginui = pluginsmgr.PluginsMgr()
+        self.pluginui.searchplugins()
         self.audiolist = []
         self.curindex = 0
         self.audiotime_all = 0
@@ -33,8 +35,21 @@ class PQPlayer(ui_pqplayer.Ui_MainWindow):
         self.connect(self.toolButton_left, SIGNAL("clicked()"), self.startleft)
         self.connect(self.toolButton_right, SIGNAL("clicked()"), self.startright)
         self.connect(self.listshow, SIGNAL("itemDoubleClicked(QListWidgetItem*)"), self.startselect)
+        self.connect(self.listsearch, SIGNAL("itemDoubleClicked(QListWidgetItem*)"), self.startsearchurl)
         self.connect(self.toolButton_clear, SIGNAL("clicked()"), self.clearlist)
         self.connect(self.toolButton_plugins, SIGNAL("clicked()"), self.pluginsmgr)
+        self.connect(self.toolButton_baidu, SIGNAL("clicked()"), self.searchbaidu)
+        self.connect(self.toolButton_163, SIGNAL("clicked()"), self.search163)
+    def startsearchurl(self, item):
+        strvar = item.data(Qt.ToolTipRole)
+        txt = strvar.toString()
+        if len(txt) > 0:
+            self.audiolist.append(txt)
+            self.curindex = len(self.audiolist)-1
+            self.updatelistui()
+            self.mediaobj.setCurrentSource(Phonon.MediaSource(txt))
+            self.mediaobj.play()
+            self.listshow.setCurrentRow(self.curindex)
     def clearlist(self):
         self.audiolist = []
         self.curindex = 0
@@ -58,6 +73,7 @@ class PQPlayer(ui_pqplayer.Ui_MainWindow):
             self.updatelistui()
     def updatelistui(self):
         #print self.audiolist
+        self.listshow.clear()
         for strpath in self.audiolist:
             item = QListWidgetItem(os.path.basename(unicode(strpath)))
             item.setData(Qt.ToolTipRole, QVariant(strpath))
@@ -127,15 +143,42 @@ class PQPlayer(ui_pqplayer.Ui_MainWindow):
             strshow = QString("%1 - %2").arg(trackArtist[0]).arg(trackTitle[0])
             self.label_author.setText(strshow)
         else:
-            self.label_author.setText(QString(strshow))
+            if trackTitle is not None:
+                strshow = QString("%1").arg(trackTitle[0])
+                self.label_author.setText(strshow)
+            else:
+                self.label_author.setText(QString(strshow))
     def pluginsmgr(self):
-        p = pluginsmgr.PluginsMgr()
-        p.searchplugins()
-        p.exec_()
+        self.pluginui.show()
+    def searchbaidu(self):
+        txt = unicode(self.lineEdit_search.text()).encode(encoding="utf-8", errors="ignore")
+        audioinf = self.pluginui.search(txt, 1)
+        print audioinf
+        print txt
+        #strshow = "{} - {}".format(audioinf['title'], audioinf['artist'])
+        if len(audioinf['title']) > 0:
+            strshow = QString("%1 - %2").arg(QString(audioinf['title'])).arg(QString(audioinf['artist']))
+            strtip = QString(audioinf['audiourl'])
+            item = QListWidgetItem(QString(strshow))
+            item.setToolTip(strtip)
+            self.listsearch.addItem(item)
+    def search163(self):
+        txt = unicode(self.lineEdit_search.text()).encode(encoding="utf-8", errors="ignore")
+        audioinf = self.pluginui.search(txt, 2)
+        print audioinf
+        print txt
+        #strshow = "{} - {}".format(audioinf['title'], audioinf['artist'])
+        if len(audioinf['title']) > 0:
+            strshow = QString("%1 - %2").arg(QString(audioinf['title'])).arg(QString(audioinf['artist']))
+            strtip = QString(audioinf['audiourl'])
+            item = QListWidgetItem(QString(strshow))
+            item.setToolTip(strtip)
+            self.listsearch.addItem(item)
+
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)
     ui = PQPlayer()
-    ui.setskin("background-color: rgb(85, 85, 127);color: rgb(255, 255, 255);")
+    ui.setskin("background-color: rgb(64, 128, 128);color: rgb(255, 128, 64);")
     ui.show()
     sys.exit(app.exec_())

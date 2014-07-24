@@ -27,7 +27,7 @@ except AttributeError:
 class Ui_MainWindow(QDialog):
     def __init__(self, parent=None):
         super(Ui_MainWindow, self).__init__(parent)
-        self.resize(586, 308)
+        self.setFixedSize(586, 308)
         #self.setStyleSheet(_fromUtf8("background-color: rgb(85, 85, 127);color: rgb(255, 255, 255);"))
         self.layout_all = QHBoxLayout()
         # title
@@ -83,11 +83,11 @@ class Ui_MainWindow(QDialog):
         # top search layout
         self.layout_search = QHBoxLayout()
         self.lineEdit_search = QLineEdit()
-        self.toolButton_baidu = QToolButton()
         self.toolButton_163 = QToolButton()
+        self.toolButton_baidu = QToolButton()
         self.layout_search.addWidget(self.lineEdit_search)
-        self.layout_search.addWidget(self.toolButton_baidu)
         self.layout_search.addWidget(self.toolButton_163)
+        self.layout_search.addWidget(self.toolButton_baidu)
         # search list
         self.listsearch = QListWidget()
         self.layout_right.addLayout(self.layout_search)
@@ -107,6 +107,7 @@ class Ui_MainWindow(QDialog):
         self.toolButton_left.setText(_fromUtf8("<"))
         self.toolButton_play.setText(_fromUtf8("||"))
         self.toolButton_right.setText(_fromUtf8(">"))
+        self.lineEdit_search.setToolTip(_fromUtf8("输入 曲名 或 者曲名[空格]演唱者，建议使用网易云音乐引擎"))
         self.toolButton_baidu.setText(_fromUtf8("百度音乐"))
         self.toolButton_163.setText(_fromUtf8("网易云音乐"))
         self.toolButton_addfile.setText(_fromUtf8("添加文件"))

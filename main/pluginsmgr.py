@@ -52,6 +52,7 @@ class PluginsMgr(ui_pluginsmgr.Ui_PluginsMgr):
     def sendbug(self):
         pass
     def searchplugins(self):
+        self.listplugins.clear()
         #earch the plugins dir
         self.pluginsdir = os.path.abspath(self.pluginsdir)
         # add plugins dir to sys.path
@@ -64,6 +65,15 @@ class PluginsMgr(ui_pluginsmgr.Ui_PluginsMgr):
                 except:
                     print "Install plugin {} failed".format(pluginfile)
         self.reflash()
+    def search(self, txt, ty=0):
+        psearch = self.plginsSearch[ty]
+        txts = " ".join(txt.split()).split()
+        if len(txts) == 1:
+            psearch.searchaduioinfo(title=txts[0])
+        else:
+            if len(txts) > 1:
+                psearch.searchaduioinfo(title=txts[0], artist=txts[1])
+        return psearch.audioinfo
 if __name__ == "__main__":
     import sys
     app = QApplication(sys.argv)

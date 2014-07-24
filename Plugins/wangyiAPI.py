@@ -93,18 +93,29 @@ class MusicsearchAPI():
                 self.audioinfo['album'] = result['songs'][0]['album']['name']
                 for i in range(len(result['songs'])-1, -1, -1):
                     song = result['songs'][i]
-                    print '[%2d]song:%s\tartist:%s\talbum:%s\t %s' % (i+1,song['name'], song['artists'][0]['name'], song['album']['name'], song['id'])
+                    #print '[%2d]song:%s\tartist:%s\talbum:%s\t %s' % (i+1,song['name'], song['artists'][0]['name'], song['album']['name'], song['id'])
                     if kwargs['title'] == song['name'].encode(self.sysencode):
-                        self.audioinfo['songid'] = song['id']
                         self.audioinfo['title'] = song['name']
+                        self.audioinfo['songid'] = song['id']
                         self.audioinfo['artist'] = song['artists'][0]['name']
                         self.audioinfo['album'] = song['album']['name']
                         if kwargs.get('artist') is not None:
                             if song['artists'][0]['name'].encode(self.sysencode) == kwargs.get('artist'):
+                                self.audioinfo['title'] = song['name']
+                                self.audioinfo['songid'] = song['id']
                                 self.audioinfo['artist'] = song['artists'][0]['name']
+                                self.audioinfo['album'] = song['album']['name']
                                 if kwargs.get('album') is not None:
                                     if song['album']['name'].encode(self.sysencode) == kwargs.get('album'):
+                                        self.audioinfo['title'] = song['name']
+                                        self.audioinfo['songid'] = song['id']
+                                        self.audioinfo['artist'] = song['artists'][0]['name']
                                         self.audioinfo['album'] = song['album']['name']
+                                        break
+                                else:
+                                    break
+                        else:
+                            break
                 # 查询下载地址和歌词地址等
                 self.__searchdownloadurl()
                 return 1

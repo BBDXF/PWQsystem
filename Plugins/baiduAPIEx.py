@@ -60,8 +60,11 @@ class MusicsearchAPI():
         title = kwargs.get("title", None)
         if title is None:
             return None
+        stxt = title
+        #if kwargs.get("artist") is not None:
+        #    stxt = "{} {}".format(title, kwargs.get("artist"))
         search_url = "http://mp3.baidu.com/dev/api/?tn=getinfo&ct=0&word={0}&ie=utf-8&format=xml&callback=Pub.music.searchResult"\
-            .format(urllib.quote(title))
+            .format(urllib.quote(stxt))
         print(search_url)
         request = urllib2.Request(search_url, headers=self.headers)
         resp = urllib2.urlopen(request)
@@ -112,7 +115,7 @@ def test():
     print convert(rest)
     return None
     """
-    p.searchaduioinfo(title="黄昏")
+    p.searchaduioinfo(title="黄昏", artist="周传雄")
     for k, v in p.audioinfo.items():
         print k, "=", v
 

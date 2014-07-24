@@ -36,7 +36,7 @@
 ##项目重大纪要##
 ###项目日志###
 2014-7-16 创建项目，编写启动文档
-
+2014-7-24 Demoy版本，音乐播放器基础功能完成
 
 ###项目人员###
 master: BBDXF (笨笨D幸福)  
@@ -50,5 +50,12 @@ blog.csdn.net/bbdxf
 www.cnblogs.com/bbdxf
 
 ##使用说明##
+###Demo播放器###
+> Python + PyQt + Phonon  
+> 播放器功能 + 插件管理功能 （完成基础内容）  
 
-暂定
+播放器预览：    
+![播放器](/images/bfq.png)
+
+插件管理：    
+![插件管理](/images/cjgl.png)
